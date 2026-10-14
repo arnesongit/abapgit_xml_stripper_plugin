@@ -81,6 +81,7 @@ class zcl_abapgit_xml_stripper definition
       importing
         is_item      type zif_abapgit_definitions=>ty_item
       changing
+        cv_sha1      type zif_abapgit_git_definitions=>ty_sha1
         cv_file_blob type xstring
       raising
         zcx_abapgit_exception.
@@ -193,6 +194,7 @@ CLASS ZCL_ABAPGIT_XML_STRIPPER IMPLEMENTATION.
           it_paths = lt_paths
         changing
           cv_blob = cv_file_blob ).
+      cv_sha1 = zcl_abapgit_hash=>sha1_blob( cv_file_blob ).
     endif.
 
   endmethod.
@@ -216,6 +218,7 @@ CLASS ZCL_ABAPGIT_XML_STRIPPER IMPLEMENTATION.
         exporting
           is_item = ls_item
         changing
+          cv_sha1      = <rfile>-sha1
           cv_file_blob = <rfile>-data ).
     endloop.
 
@@ -226,6 +229,7 @@ CLASS ZCL_ABAPGIT_XML_STRIPPER IMPLEMENTATION.
         exporting
           is_item = ls_item
         changing
+          cv_sha1      = <lfile>-file-sha1
           cv_file_blob = <lfile>-file-data ).
     endloop.
 
